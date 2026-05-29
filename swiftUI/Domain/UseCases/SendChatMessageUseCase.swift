@@ -11,7 +11,7 @@ import Foundation
 struct SendChatMessageUseCase {
     let chatRepository: ChatRepository
 
-    func execute(messages: [ChatMessage]) async throws -> String {
-        try await chatRepository.send(messages: messages)
+    func execute(messages: [ChatMessage], context: ChatConversationContext) async throws -> String {
+        try await chatRepository.send(messages: messages, context: context)
     }
 }

@@ -15,12 +15,15 @@ final class DistrictViewModel: ObservableObject {
     @Published private(set) var districts: [District] = []
     @Published private(set) var isLoadingDistricts = false
     @Published var errorMessage: String?
+    @Published var selectedDistrict: District?
 
     private let getDistrictsUseCase: GetDistrictsUseCase
+    private let localAreaContextStore: LocalAreaContextStoring
 
-    init(province: Province, getDistrictsUseCase: GetDistrictsUseCase) {
+    init(province: Province, getDistrictsUseCase: GetDistrictsUseCase, localAreaContextStore: LocalAreaContextStoring) {
         self.province = province
         self.getDistrictsUseCase = getDistrictsUseCase
+        self.localAreaContextStore = localAreaContextStore
     }
 
     var title: String {
@@ -40,5 +43,14 @@ final class DistrictViewModel: ObservableObject {
             errorMessage = "Unable to load districts right now."
         }
     }
-}
 
+    func selectDistrict(_ district: District) {
+        selectedDistrict = district
+        localAreaContextStore.currentContext = LocalAreaContext(
+            provinceID: province.provinceID,
+            provinceName: province.provinceName,
+            districtID: district.districtID,
+            districtName: district.districtName
+        )
+    }
+}

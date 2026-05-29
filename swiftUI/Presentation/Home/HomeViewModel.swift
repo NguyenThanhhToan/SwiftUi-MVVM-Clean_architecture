@@ -16,12 +16,16 @@ final class HomeViewModel: ObservableObject {
     @Published private(set) var isLoadingProvinces = false
     @Published var errorMessage: String?
     @Published var selectedProvince: Province?
+    @Published private(set) var currentAreaTitle: String = "Select a province and district"
 
     private let getProvincesUseCase: GetProvincesUseCase
+    private let localAreaContextStore: LocalAreaContextStoring
 
-    init(user: User, getProvincesUseCase: GetProvincesUseCase) {
+    init(user: User, getProvincesUseCase: GetProvincesUseCase, localAreaContextStore: LocalAreaContextStoring) {
         self.user = user
         self.getProvincesUseCase = getProvincesUseCase
+        self.localAreaContextStore = localAreaContextStore
+        self.currentAreaTitle = localAreaContextStore.currentContext?.displayTitle ?? "Select a province and district"
     }
 
     var welcomeMessage: String {
@@ -44,11 +48,12 @@ final class HomeViewModel: ObservableObject {
 
     func selectProvince(_ province: Province) {
         selectedProvince = province
-
-        // District fetching will plug into this path later once the API exists.
-        // The selected province is kept in state so a future district use case
-        // can be triggered from the same interaction point.
-        print("Selected ProvinceID: \(province.provinceID)")
-        print("Selected ProvinceName: \(province.provinceName)")
+        localAreaContextStore.currentContext = LocalAreaContext(
+            provinceID: province.provinceID,
+            provinceName: province.provinceName,
+            districtID: nil,
+            districtName: nil
+        )
+        currentAreaTitle = localAreaContextStore.currentContext?.displayTitle ?? province.provinceName
     }
 }

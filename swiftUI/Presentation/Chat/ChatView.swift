@@ -53,10 +53,10 @@ private extension ChatView {
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("AI Chat")
+                Text("Local Life AI")
                     .font(.system(size: 32, weight: .bold))
 
-                Text("Ask questions and keep the conversation going")
+                Text(viewModel.currentAreaSummary)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

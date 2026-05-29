@@ -11,8 +11,7 @@ import Foundation
 struct SaveNoteUseCase {
     let noteRepository: NoteRepository
 
-    func execute(content: String, for date: Date) async throws -> NoteEntry {
-        try await noteRepository.saveNote(content: content, for: date)
+    func execute(note: LocalNote) async throws -> LocalNote {
+        try await noteRepository.save(note: note)
     }
 }
-

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol NoteRepository {
-    func fetchNote(for date: Date) async throws -> NoteEntry?
-    func saveNote(content: String, for date: Date) async throws -> NoteEntry
+    func fetchNotes(in area: LocalAreaContext, query: String?) async throws -> [LocalNote]
+    func save(note: LocalNote) async throws -> LocalNote
+    func delete(noteID: UUID) async throws
 }
-

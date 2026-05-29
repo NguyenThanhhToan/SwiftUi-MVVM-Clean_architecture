@@ -21,26 +21,26 @@ enum AppTab: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .home:
-            return "Home"
+            return "Location"
         case .notes:
             return "Notes"
         case .chat:
-            return "Chat"
+            return "AI"
         case .settings:
-            return "Settings"
+            return "Profile"
         }
     }
 
     var systemImage: String {
         switch self {
         case .home:
-            return "house.fill"
+            return "mappin.and.ellipse"
         case .notes:
             return "note.text"
         case .chat:
-            return "message.fill"
+            return "sparkles"
         case .settings:
-            return "gearshape.fill"
+            return "person.crop.circle.fill"
         }
     }
 }

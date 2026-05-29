@@ -2,8 +2,7 @@
 //  NoteRecord.swift
 //  swiftUI
 //
-//  SwiftData model used by the local database. This stays in Data so the rest
-//  of the app can remain decoupled from persistence details.
+//  SwiftData model used by the local database for location-aware notes.
 //
 
 import Foundation
@@ -11,14 +10,41 @@ import SwiftData
 
 @Model
 final class NoteRecord {
-    @Attribute(.unique) var dateKey: String
+    @Attribute(.unique) var id: UUID
+    var title: String
     var content: String
+    var categoryRawValue: String
+    var provinceID: Int?
+    var provinceName: String
+    var districtID: Int?
+    var districtName: String?
+    var locationKey: String
+    var createdAt: Date
     var updatedAt: Date
 
-    init(dateKey: String, content: String, updatedAt: Date = .now) {
-        self.dateKey = dateKey
+    init(
+        id: UUID = UUID(),
+        title: String,
+        content: String,
+        categoryRawValue: String,
+        provinceID: Int?,
+        provinceName: String,
+        districtID: Int?,
+        districtName: String?,
+        locationKey: String,
+        createdAt: Date = .now,
+        updatedAt: Date = .now
+    ) {
+        self.id = id
+        self.title = title
         self.content = content
+        self.categoryRawValue = categoryRawValue
+        self.provinceID = provinceID
+        self.provinceName = provinceName
+        self.districtID = districtID
+        self.districtName = districtName
+        self.locationKey = locationKey
+        self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
 }
-

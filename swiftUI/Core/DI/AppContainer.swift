@@ -16,12 +16,14 @@ final class AppContainer {
     private let districtRepository: DistrictRepository
     private let noteRepository: NoteRepository
     private let chatRepository: ChatRepository
+    private let localAreaContextStore: LocalAreaContextStoring
     private var authSessionStore: AuthSessionStoring
     private let loginUseCase: LoginUseCase
     private let getProvincesUseCase: GetProvincesUseCase
     private let getDistrictsUseCase: GetDistrictsUseCase
     private let getNoteUseCase: GetNoteUseCase
     private let saveNoteUseCase: SaveNoteUseCase
+    private let deleteNoteUseCase: DeleteNoteUseCase
     private let sendChatMessageUseCase: SendChatMessageUseCase
 
     init(modelContainer: ModelContainer) {
@@ -30,12 +32,14 @@ final class AppContainer {
         self.districtRepository = GhnDistrictRepository()
         self.noteRepository = SwiftDataNoteRepository(modelContainer: modelContainer)
         self.chatRepository = GeminiChatRepository()
+        self.localAreaContextStore = UserDefaultsLocalAreaContextStore()
         self.authSessionStore = UserDefaultsAuthSessionStore()
         self.loginUseCase = LoginUseCase(authRepository: authRepository)
         self.getProvincesUseCase = GetProvincesUseCase(provinceRepository: provinceRepository)
         self.getDistrictsUseCase = GetDistrictsUseCase(districtRepository: districtRepository)
         self.getNoteUseCase = GetNoteUseCase(noteRepository: noteRepository)
         self.saveNoteUseCase = SaveNoteUseCase(noteRepository: noteRepository)
+        self.deleteNoteUseCase = DeleteNoteUseCase(noteRepository: noteRepository)
         self.sendChatMessageUseCase = SendChatMessageUseCase(chatRepository: chatRepository)
     }
 
@@ -46,22 +50,43 @@ final class AppContainer {
 
     @MainActor
     func makeHomeViewModel(user: User) -> HomeViewModel {
-        HomeViewModel(user: user, getProvincesUseCase: getProvincesUseCase)
+        HomeViewModel(
+            user: user,
+            getProvincesUseCase: getProvincesUseCase,
+            localAreaContextStore: localAreaContextStore
+        )
     }
 
     @MainActor
     func makeDistrictViewModel(province: Province) -> DistrictViewModel {
-        DistrictViewModel(province: province, getDistrictsUseCase: getDistrictsUseCase)
+        DistrictViewModel(
+            province: province,
+            getDistrictsUseCase: getDistrictsUseCase,
+            localAreaContextStore: localAreaContextStore
+        )
     }
 
     @MainActor
     func makeNotesViewModel() -> NotesViewModel {
-        NotesViewModel(getNoteUseCase: getNoteUseCase, saveNoteUseCase: saveNoteUseCase)
+        NotesViewModel(
+            getNoteUseCase: getNoteUseCase,
+            saveNoteUseCase: saveNoteUseCase,
+            deleteNoteUseCase: deleteNoteUseCase,
+            localAreaContextStore: localAreaContextStore
+        )
     }
 
     @MainActor
     func makeChatViewModel() -> ChatViewModel {
-        ChatViewModel(sendChatMessageUseCase: sendChatMessageUseCase)
+        ChatViewModel(
+            sendChatMessageUseCase: sendChatMessageUseCase,
+            getNoteUseCase: getNoteUseCase,
+            localAreaContextStore: localAreaContextStore
+        )
+    }
+
+    func makeLocalAreaContextStore() -> LocalAreaContextStoring {
+        localAreaContextStore
     }
 
     @MainActor
@@ -84,5 +109,6 @@ final class AppContainer {
         authSessionStore.clear()
         authSessionStore.isLoggedIn = false
         authSessionStore.currentUser = nil
+        localAreaContextStore.clear()
     }
 }

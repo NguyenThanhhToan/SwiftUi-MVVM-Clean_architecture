@@ -23,9 +23,9 @@ final class GeminiChatRepository: ChatRepository {
         self.apiKeyProvider = apiKeyProvider
     }
 
-    func send(messages: [ChatMessage]) async throws -> String {
+    func send(messages: [ChatMessage], context: ChatConversationContext) async throws -> String {
         let apiKey = try apiKeyProvider()
-        let request = try makeRequest(messages: messages, apiKey: apiKey)
+        let request = try makeRequest(messages: messages, context: context, apiKey: apiKey)
 
         APILogger.logRequest(request, apiName: "Gemini Chat")
 
@@ -55,7 +55,7 @@ final class GeminiChatRepository: ChatRepository {
         }
     }
 
-    private func makeRequest(messages: [ChatMessage], apiKey: String) throws -> URLRequest {
+    private func makeRequest(messages: [ChatMessage], context: ChatConversationContext, apiKey: String) throws -> URLRequest {
         let urlString = "https://generativelanguage.googleapis.com/v1beta/models/\(modelName):generateContent"
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
@@ -71,7 +71,7 @@ final class GeminiChatRepository: ChatRepository {
                     role: "system",
                     parts: [
                         GeminiPartDTO(
-                            text: "You are a helpful chat assistant. Reply naturally in the user's language, keep answers concise unless more detail is needed."
+                            text: makeSystemInstruction(context: context)
                         )
                     ]
                 ),
@@ -80,6 +80,22 @@ final class GeminiChatRepository: ChatRepository {
         )
 
         return request
+    }
+
+    private func makeSystemInstruction(context: ChatConversationContext) -> String {
+        let areaText = context.area?.displayTitle ?? "No selected area"
+        let noteText = context.noteDigest.isEmpty ? "No saved local notes yet." : context.noteDigest
+
+        return """
+        You are Local Life AI, a premium local assistant for city and district planning, note organization, and recommendations.
+        Reply naturally in the user's language.
+        Keep answers concise unless the user asks for detail.
+        Current selected area: \(areaText)
+        Relevant saved local notes:
+        \(noteText)
+        Use the local notes and selected area as context when making suggestions, summaries, itineraries, and rewrites.
+        If information is missing, say so clearly and offer a practical next step.
+        """
     }
 
     private func validate(response: URLResponse, data: Data) throws {

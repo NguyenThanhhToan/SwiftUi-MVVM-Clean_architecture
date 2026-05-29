@@ -8,8 +8,7 @@
 
 /* Begin PBXFileReference section */
 		C7E441472FC7D586002F2252 /* swiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7E441552FC7D586002F2252 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config/Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
-		C7E441562FC7D586002F2252 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config/Info.plist; sourceTree = SOURCE_ROOT; };
+		C7E441552FC7D586002F2252 /* Config/Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config/Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -31,11 +30,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C7B911692FC9781C00131C50 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				C7E441552FC7D586002F2252 /* Config/Secrets.xcconfig */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		C7E4413E2FC7D586002F2252 = {
 			isa = PBXGroup;
 			children = (
 				C7E441492FC7D586002F2252 /* swiftUI */,
 				C7E441482FC7D586002F2252 /* Products */,
+				C7B911692FC9781C00131C50 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -248,7 +256,7 @@
 		};
 		C7E441532FC7D586002F2252 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7E441552FC7D586002F2252 /* Secrets.xcconfig */;
+			baseConfigurationReference = C7E441552FC7D586002F2252 /* Config/Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -276,7 +284,7 @@
 		};
 		C7E441542FC7D586002F2252 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7E441552FC7D586002F2252 /* Secrets.xcconfig */;
+			baseConfigurationReference = C7E441552FC7D586002F2252 /* Config/Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

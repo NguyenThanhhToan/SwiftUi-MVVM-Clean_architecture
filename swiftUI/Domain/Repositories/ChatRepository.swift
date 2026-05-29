@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ChatRepository {
-    func send(messages: [ChatMessage]) async throws -> String
+    func send(messages: [ChatMessage], context: ChatConversationContext) async throws -> String
 }

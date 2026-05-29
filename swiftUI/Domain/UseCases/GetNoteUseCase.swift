@@ -11,8 +11,7 @@ import Foundation
 struct GetNoteUseCase {
     let noteRepository: NoteRepository
 
-    func execute(for date: Date) async throws -> NoteEntry? {
-        try await noteRepository.fetchNote(for: date)
+    func execute(in area: LocalAreaContext, query: String? = nil) async throws -> [LocalNote] {
+        try await noteRepository.fetchNotes(in: area, query: query)
     }
 }
-
