@@ -35,7 +35,6 @@ final class GhnDistrictRepository: DistrictRepository {
             try validate(response: response, data: data)
 
             let decodedResponse = try JSONDecoder().decode(DistrictResponseDTO.self, from: data)
-            APILogger.logDecodedResponse(decodedResponse, apiName: "Get Districts")
 
             guard decodedResponse.code == 200 else {
                 throw URLError(.badServerResponse)

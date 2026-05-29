@@ -61,7 +61,15 @@ struct AppRootView: View {
             .tag(AppTab.notes)
 
             NavigationStack {
-                SettingsView(viewModel: container.makeSettingsViewModel(onLogout: logoutAction))
+                ChatView(viewModel: container.makeChatViewModel())
+            }
+            .tabItem {
+                Label(AppTab.chat.title, systemImage: AppTab.chat.systemImage)
+            }
+            .tag(AppTab.chat)
+
+            NavigationStack {
+                SettingsView(viewModel: container.makeSettingsViewModel(user: user, onLogout: logoutAction))
             }
             .tabItem {
                 Label(AppTab.settings.title, systemImage: AppTab.settings.systemImage)

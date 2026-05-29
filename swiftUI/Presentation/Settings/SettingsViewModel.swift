@@ -11,10 +11,14 @@ import Foundation
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
+    let userName: String
+    let userEmail: String
     private let clearSession: () -> Void
     private let onLogout: () -> Void
 
-    init(clearSession: @escaping () -> Void, onLogout: @escaping () -> Void) {
+    init(user: User, clearSession: @escaping () -> Void, onLogout: @escaping () -> Void) {
+        self.userName = user.fullName
+        self.userEmail = user.email
         self.clearSession = clearSession
         self.onLogout = onLogout
     }

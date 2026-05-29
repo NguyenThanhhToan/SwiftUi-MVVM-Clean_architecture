@@ -13,15 +13,6 @@ struct NoteEditorCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("Notes")
-                    .font(.headline)
-                Spacer()
-                if isSaving {
-                    ProgressView()
-                }
-            }
-
             TextEditor(text: $text)
                 .frame(minHeight: 220)
                 .scrollContentBackground(.hidden)

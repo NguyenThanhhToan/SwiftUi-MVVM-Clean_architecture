@@ -11,6 +11,7 @@ import Foundation
 enum AppTab: String, CaseIterable, Identifiable {
     case home
     case notes
+    case chat
     case settings
 
     var id: String {
@@ -23,6 +24,8 @@ enum AppTab: String, CaseIterable, Identifiable {
             return "Home"
         case .notes:
             return "Notes"
+        case .chat:
+            return "Chat"
         case .settings:
             return "Settings"
         }
@@ -34,6 +37,8 @@ enum AppTab: String, CaseIterable, Identifiable {
             return "house.fill"
         case .notes:
             return "note.text"
+        case .chat:
+            return "message.fill"
         case .settings:
             return "gearshape.fill"
         }

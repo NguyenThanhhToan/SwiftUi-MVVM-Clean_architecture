@@ -30,7 +30,6 @@ final class GhnProvinceRepository: ProvinceRepository {
             try validate(response: response, data: data)
 
             let decodedResponse = try JSONDecoder().decode(ProvinceResponseDTO.self, from: data)
-            APILogger.logDecodedResponse(decodedResponse, apiName: "Get Provinces")
 
             guard decodedResponse.code == 200 else {
                 throw URLError(.badServerResponse)

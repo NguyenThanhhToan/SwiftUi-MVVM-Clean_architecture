@@ -18,6 +18,36 @@ struct SettingsView: View {
 
     var body: some View {
         List {
+            // MARK: - Avatar Section
+            Section {
+                HStack {
+                    Spacer()
+                    VStack(spacing: 12) {
+                        // Avatar circle
+                        Circle()
+                            .fill(Color.gray.opacity(0.3))
+                            .frame(width: 80, height: 80)
+                            .overlay(
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .foregroundColor(.gray)
+                                    .padding(8)
+                            )
+                            .clipShape(Circle())
+                        
+                        Text(viewModel.userName)
+                            .font(.headline)
+                        
+                        Text(viewModel.userEmail)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                }
+                .padding(.vertical, 8)
+                .listRowBackground(Color.clear)
+            }
+            
             Section("App") {
                 row(title: "Version", value: "1.0")
                 row(title: "Architecture", value: "MVVM + Clean")
